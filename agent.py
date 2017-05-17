@@ -1,16 +1,17 @@
 import random
-
+import string
 consonants = string.ascii_lowercase
 vowels = "aeiou"
 
-consonants = [char for char in consonants if not char in vowels]
+consonants = [char for char in consonants if char not in vowels]
 vowels = [char for char in vowels]
 
 vowel_mut = 0.1
-conso_mut = 0.9
+conso_mut = 0.1
 compo_mut = 0.1
 
 conflict_chance = 0.0001
+
 
 class Agent:
     def __init__(self, population=None):
@@ -32,8 +33,15 @@ class Agent:
     def get_dictionary(self):
         return self.dictionary
 
-    def set_dictionary(self, dictionary):
-        self.dictionary = dictionary
+    def set_dictionary(self, dictionary, size=0.7):
+        individual_dictionary = []
+        dictionary_size = int(size * len(dictionary))
+        while len(individual_dictionary) < dictionary_size:
+            word = random.choice(dictionary)
+            if word not in individual_dictionary:
+                individual_dictionary.append(word)
+
+        self.dictionary = individual_dictionary
 
     def get_used_consonants(self):
         return self.used_consonants
@@ -63,13 +71,14 @@ class Agent:
 
     def bump_into_agent(self, other_agent):
         word = random.choice(self.dictionary)
-        other_agent.got_bumped_by_agent(self, word)
+        return word
 
     def got_bumped_by_agent(self, other_agent, word):
         # Do something with word
         # Mutate consonants and vowels or something
         word = self.mutate(word)
         self.add_to_vocabulary(word)
+        return word
 
     def mutate(self, word):
         # Mutating one of the vowels
@@ -79,7 +88,7 @@ class Agent:
                 char = word[index]
                 if char in vowels:
                     new_vowel = random.choice(vowels)
-                    word = word[:i] + new_vowel + word[i+1:]
+                    word = word[:index] + new_vowel + word[index + 1:]
                     break
 
         # TODO native consonant
@@ -87,13 +96,37 @@ class Agent:
         if random.random() < conso_mut:
             while 1:
                 index = random.randint(0, len(word)-1)
+                char = word[index]
                 if not char in vowels:
                     new_consonant = random.choice(consonants)
-                    word = word[:i] + new_consonant + word[i+1:]
+                    word = word[:index] + new_consonant + word[index + 1:]
+
                     break
 
         if random.random() < compo_mut:
             dict_word = random.choice(self.dictionary)
-            word = word + dict_word
+            if random.randint(0,1):
+                word = word[:len(word)//2] + dict_word[len(dict_word)//2:]
 
         return word
+
+
+if __name__ == '__main__':
+
+    from lang_gen import LanguageGenerator
+
+    generator = LanguageGenerator()
+
+    x1 = Agent()
+    x1.set_dictionary([generator.generate_word() for i in range(1000)])
+    x2 = Agent()
+    x2.set_dictionary([generator.generate_word() for i in range(1000)])
+    import time
+    print(x1.get_dictionary())
+    print(x2.get_dictionary())
+    for i in range(20):
+        word = x1.bump_into_agent(x2)
+        print('Word that first agent told to second agent: ', word)
+        time.sleep(0.1)
+        print('After bump: ', x2.got_bumped_by_agent(x1, word))
+        print('\n')
