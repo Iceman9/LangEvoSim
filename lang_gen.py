@@ -12,9 +12,9 @@ class LanguageGenerator:
     def __init__(self):
         pass
 
-    def generate_word(self, min=5, max=8, mutation = 0.1):
+    def generate_word(self, min=5, max=8, mutation=0.1):
         word_length = random.randint(min, max)
-        
+
         last_draw = random.randint(0, 1)
 
         if last_draw:
@@ -54,7 +54,7 @@ if __name__ == '__main__':
 
     # Performance
     start = time.time()
-    x = [] 
+    x = []
     for i in range(100000):
         x.append(generator.generate_word(8,8))
     print('Time: ', time.time() - start, len(x))
