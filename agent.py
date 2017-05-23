@@ -14,16 +14,46 @@ conflict_chance = 0.0001
 
 
 class Agent:
+    """Class Agent initializes an object that represents one linguistic agent in
+    a population.
+
+    Longer description
+
+    __init__ holds the following class Agent's .self variables:
+
+    :var self.population: holds object's population that it belongs to
+    :var self.pos: holds object's position on a map
+    :var self.dictionary: holds object's individual vocabulary that is part of its population's language
+    :var self.used_consonants: holds consonants used by the agent; these can be modified to expand its vocabulary through mutation
+
+    __init__ arguments:
+
+    :param population: default=None; an input argument population assigns Agent object to a particular population
+    :type population: string
+
+    """
     def __init__(self, population=None):
+
         self.population = population
 
         self.pos = None
         self.dictionary = []
         self.used_consonants = []
-        # It could be arbtrary:
+        # It could be arbitrary:
         # self.traits = {}
 
     def add_to_vocabulary(self, word):
+        """Adds a new, unfamiliar word from another Agent object into its own
+        vocabulary when another Agent object bumps into it. Adds a new,
+        unfamiliar consonant into its own dictionary of consonants if such a
+        consonant is present in the word.
+
+        Longer description
+
+        :param word: an input argument word is received when Agent object gets bumped into by another Agent object
+        :type word: string
+        """
+
         for char in word:
             if char in consonants and char not in self.get_used_consonants():
                 self.add_consonant(char)
@@ -31,9 +61,22 @@ class Agent:
             self.dictionary.append(word)
 
     def get_dictionary(self):
+        """Returns Agent object's dictionary/vocabulary (list).
+        """
+
         return self.dictionary
 
     def set_dictionary(self, dictionary, size=0.7):
+        """Sets Agent object's self.dictionary (vocabulary) from Agent's
+        population's language.
+
+        Longer description
+
+        :param dictionary: an input argument dictionary is the Agent's population's language
+        :type dictionary: list
+        :param size: default=0.7 (min=0.0, max=1.0); denotes random portion of the Agent's population's language the Agent object gets
+        :type size: float
+        """
         individual_dictionary = []
         dictionary_size = int(size * len(dictionary))
         while len(individual_dictionary) < dictionary_size:
@@ -44,12 +87,23 @@ class Agent:
         self.dictionary = individual_dictionary
 
     def get_used_consonants(self):
+        """Returns consonants (list) in the Agent object's vocabulary.
+        """
         return self.used_consonants
 
     def add_consonant(self, char):
+        """Adds a new, unfamiliar consonant into Agent object's dictionary of
+        consonants.
+
+        :param char: an input argument char is the consonant to be added
+        :param type: string
+
+        """
         self.used_consonants.append(char)
 
     def get_population(self):
+        """Returns the population (string) the Agent object belongs to.
+        """
         return self.population
 
     def set_population(self, new_population):
@@ -58,7 +112,7 @@ class Agent:
         self.population = new_population
 
     def get_position(self):
-        """Get's the current location of the agent in a place.
+        """Gets the current location of the agent in a place.
         Example of position:
             self.pos = (1, 2)
         Returns:
@@ -67,20 +121,64 @@ class Agent:
         return self.pos
 
     def set_position(self, new_pos):
+        """Sets Agent object to its new position (touple).
+
+        :param new_pos: an input argument new_pos is the new Agent object's position on the map
+        :type new_pos: touple
+        """
         self.pos = new_pos
 
     def bump_into_agent(self, other_agent):
+        """Returns a random word from the dictionary of the Agent object bumps
+        into another Agent object.
+
+        Longer description
+
+        :param other_agent: an input argument other_agent represents some other Agent object that is being bumped
+        :type other_agent: string
+
+        """
         word = random.choice(self.dictionary)
         return word
 
     def got_bumped_by_agent(self, other_agent, word):
+        """Returns a random word with possible mutation that the Agent object
+        receives from another Agent object that bumped into it. It is added to
+        the Agent object's vocabulary.
+
+        Longer description
+
+        :param other_agent: an input argument other_agent represents some other Agent object that is bumping into object Agent
+        :type other_agent: string
+        :param word: an input argument word is a random word from the other Agent object's dictionary
+        :type word: string
+
+        """
         # Do something with word
+
         # Mutate consonants and vowels or something
+
+        # TODO add to vocabulary after mutation only if not in vocabulary yet,
+        # this ensures that existing words from vocabulary can mutate
         word = self.mutate(word)
         self.add_to_vocabulary(word)
         return word
 
     def mutate(self, word):
+        """Returns possibly mutated new, unfamiliar word the Agent object learns
+        through bumping.
+
+        The word undergoes possible mutation with globally specified
+        possibility. The word's vowel can bu mutated into another vowel and the
+        word's consonant can be mutated into another consonant. Both mutations
+        source from the Agent object's vowel and consonant dictionary. This
+        assures possibility that new, unfamiliar consonants can become a part
+        of words. The final word is added into Agent object's vocabulary.
+
+        :param word: an input argument word is a random word from bumping Agent object's vocabulary that undergoes possible mutation
+        :type word: string
+
+        """
         # Mutating one of the vowels
         if random.random() < vowel_mut:
             while 1:
