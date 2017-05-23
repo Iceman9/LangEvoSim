@@ -1,0 +1,32 @@
+#######################################
+# Language evolution simulation project
+#######################################
+
+This is a project by Tine Kolenik & Gregor Simiè.
+
+# Requirements:
+	python 3.5+
+	sphinx 1.6.1+
+
+# How to use:
+TODO
+
+
+# How to generate documentation
+
+First you need sphinx installed in your python environment. To install sphinx
+to your python environment with calling the following command inside your
+terminal:
+
+pip3 install sphinx
+
+or
+
+pip install sphinx
+
+
+Go to src directory from TOPDIR and then call:
+
+make html
+
+to make html documentation.

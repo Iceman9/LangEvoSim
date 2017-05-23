@@ -1,3 +1,5 @@
+import random
+
 
 class Realm:
 
@@ -11,9 +13,18 @@ class Realm:
 
     """
 
-
     def __init__(self):
         self.map = []
+        self.size = None
+
+    def __repr__(self):
+        map = self.get_map()
+        string_map = ''
+        for row in map:
+            row = ' '.join([str(el) if el else ' ' for el in row]) + '\n'
+            string_map += row
+        return string_map
+
 
     def construct_basic_map(self, size_in_x=20, size_in_y=20):
         """
@@ -22,13 +33,15 @@ class Realm:
 
         Longer description
 
-        :param size_in_x: default=20; an input argument size_in_x represents the Realm's length on x axis
+        :param size_in_x:
+            default=20; an input argument size_in_x represents the Realm's length on x axis
         :type size_in_x: int
         """
         temp_map = [None for i in range(11, size_in_x * size_in_y + 11)]
         self.map = []
         for i in range(size_in_x):
             self.map.append(temp_map[size_in_y * i: size_in_y * (i + 1)])
+        self.size = (size_in_x, size_in_y)
 
     def get_map(self):
         """Returns the map (lists) of a Realm object.
@@ -59,7 +72,60 @@ class Realm:
         """
         map = self.get_map()
         new_x, new_y = new_pos
-        map[new_x, new_y] = agent
+        map[new_x][new_y] = agent
+        agent.set_position(new_pos)
+
+    def plant_agent(self, agent):
+        map = self.get_map()
+        # Draw random  indexes
+        while 1:
+            x = random.randint(0, self.size[0] - 1)
+            y = random.randint(0, self.size[1] - 1)
+            if self.check_if_pos_is_taken((x, y)):
+                continue
+
+            else:
+                map[x][y] = agent
+                agent.set_position((x, y))
+                agent.set_land(self)
+                break
+
+    def get_possible_moves(self, pos):
+        """ This function gives us the possible moves from the position pos.
+
+        :param pos: position (x, y)
+        :type pos: touple
+        """
+
+        x, y = pos
+
+        up = x + 1, y
+        down = x - 1, y
+        left = x, y - 1
+        right = x, y + 1
+
+        moves = []
+
+        status = self.check_if_pos_is_taken(up)
+        if status is not True:
+            moves.append((up, status, 'up'))
+
+        status = self.check_if_pos_is_taken(down)
+        if status is not True:
+            moves.append((down, status, 'down'))
+
+        status = self.check_if_pos_is_taken(left)
+        if status is not True:
+            moves.append((left, status, 'left'))
+
+        status = self.check_if_pos_is_taken(right)
+        if status is not True:
+            moves.append((right, status, 'right'))
+
+        return moves
+
+
+
 
 if __name__ == '__main__':
     realm = Realm()

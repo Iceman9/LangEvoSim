@@ -17,6 +17,7 @@ class Population:
     Longer description
 
     __init__ parameters:
+
     :param max_words: default=100; an input argument max_words sets the number of words in a generated language
     :type max_words: int
 
@@ -31,7 +32,12 @@ class Population:
         self.max_words = max_words
         self.dictionary = []
         self.agents = []
+        self.population_size = 0
         self.properties = {}
+
+    def __repr__(self):
+        string = 'Number of agents: ' + str(self.population_size)
+        return string
 
     def create_dict(self, vows=vowels, cons=conson, min=5, max=8, mut=0.1):
         """Creates a new language and assigns is to a population in the making.
@@ -69,10 +75,19 @@ class Population:
         :param number_of_agents: default=20; sets the number of agents in the population
         :type number_of_agents: int
         """
+        self.population_size += number_of_agents
         for i in range(number_of_agents):
             a = Agent(self)
             a.set_dictionary(self.get_dictionary())
             self.agents.append(a)
+
+    def create_agent(self):
+        """Generates a single agent and returns the pointer to it. This
+        function is usually used to track a single agent in population."""
+        a = Agent(self)
+        a.set_dictionary(self.get_dictionary())
+        self.agents.append(a)
+        return a
 
     def get_agents(self):
         """Returns a list of agents in the population.

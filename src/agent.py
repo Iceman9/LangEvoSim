@@ -37,10 +37,14 @@ class Agent:
         self.population = population
 
         self.pos = None
+        self.land = None
         self.dictionary = []
         self.used_consonants = []
         # It could be arbitrary:
         # self.traits = {}
+
+    def __repr__(self):
+        return 'Agent'
 
     def add_to_vocabulary(self, word):
         """Adds a new, unfamiliar word from another Agent object into its own
@@ -111,10 +115,16 @@ class Agent:
         """
         self.population = new_population
 
+    def get_land(self):
+        return self.land
+
+    def set_land(self, new_land):
+        self.land = new_land
+
     def get_position(self):
         """Gets the current location of the agent in a place.
-        Example of position:
-            self.pos = (1, 2)
+        Example of position: *self.pos = (1, 2)*
+
         Returns:
             self.pos (touple): A set of N-dim coordinate
         """

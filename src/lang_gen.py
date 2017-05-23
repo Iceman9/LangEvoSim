@@ -13,12 +13,14 @@ class LanguageGenerator:
     Longer description
 
     __init__ parameters:
+
     :param vow: default=vowels; an input argument vow is a list of vowels (from global variable) that can be used to construct a language
     :type vow: list
     :param cons: default=consonants; an input argument cons is a list of consonants (from global variable) that can be used to construct a language
     :type cons: list
 
     __init__ variables:
+
     :var self.vowels: is assigned a list of vowels to be used to construct a language
     :var self.consonants: is assigned a list of consonants to be used to construct a language
     :var self.properties: a dictionary with keys vowels and consonants which get self.vowels and self.consonants, respectively
