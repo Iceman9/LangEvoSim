@@ -24,6 +24,13 @@ or
 
 pip install sphinx
 
+Then install the rtd_docs_theme for the ReadTheDocs theme.
+
+pip install sphinx_rtd_theme
+
+or
+
+pip3 install sphinx_rtd_theme
 
 Go to src directory from TOPDIR and then call:
 
