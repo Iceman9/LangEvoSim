@@ -9,24 +9,16 @@ vowels = [char for char in vowels]
 
 class LanguageGenerator:
     """Class LanguageGenerator generates a list of words - a pseudolanguage.
-
-    Longer description
-
-    __init__ parameters:
-
-    :param vow: default=vowels; an input argument vow is a list of vowels (from global variable) that can be used to construct a language
-    :type vow: list
-    :param cons: default=consonants; an input argument cons is a list of consonants (from global variable) that can be used to construct a language
-    :type cons: list
-
-    __init__ variables:
-
-    :var self.vowels: is assigned a list of vowels to be used to construct a language
-    :var self.consonants: is assigned a list of consonants to be used to construct a language
-    :var self.properties: a dictionary with keys vowels and consonants which get self.vowels and self.consonants, respectively
+        Attributes:
 
     """
     def __init__(self, vow=vowels, cons=consonants):
+        """
+        Parameters:
+            vow (list): a list of vowels to be used to construct a language
+            consonants (list): a list of consonants to be used to construct a
+                language
+        """
         self.vowels = vow
         self.consonants = cons
         self.properties = {}
@@ -36,15 +28,13 @@ class LanguageGenerator:
     def generate_word(self, min=5, max=8, mutation=0.1):
         """Returns a new randomly generated word with a possible mutation.
 
-        Longer description
-
-        :param min: an input argument min represents the minimal length of a word
-        :type min: float
-        :param max: an input argument max represents the maximum length of a word
-        :type max: float
-        :param mutation: an input argument mutation represents the possibility of a word being mutated
-        :type mutation: float
-
+        Parameters:
+            min (int): an input argument min represents the minimal length of a
+                word.
+            max (int): an input argument max represents the maximum length of a
+                word.
+            mutation (float): an input argument mutation represents the
+                possibility of a word being mutated.
         """
 
         word_length = random.randint(min, max)

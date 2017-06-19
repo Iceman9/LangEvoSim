@@ -17,22 +17,18 @@ class Agent:
     """Class Agent initializes an object that represents one linguistic agent in
     a population.
 
-    Longer description
-
-    __init__ holds the following class Agent's .self variables:
-
-    :var self.population: holds object's population that it belongs to
-    :var self.pos: holds object's position on a map
-    :var self.dictionary: holds object's individual vocabulary that is part of its population's language
-    :var self.used_consonants: holds consonants used by the agent; these can be modified to expand its vocabulary through mutation
-
-    __init__ arguments:
-
-    :param population: default=None; an input argument population assigns Agent object to a particular population
-    :type population: string
-
+    Attributes:
+        population (Population): The population the Agent belongs to.
+        pos (touble): The position of the Agent on a map.
+        dictionary (list): Agents list of vocabulary.
+        used_consonants (list): List of used consonants, these can be modified
+            to expand it's vocabulary through mutation.
     """
     def __init__(self, population=None):
+        """
+        Parameters:
+            population (Population): The population that the agent belongs to.
+        """
 
         self.population = population
 
@@ -52,10 +48,9 @@ class Agent:
         unfamiliar consonant into its own dictionary of consonants if such a
         consonant is present in the word.
 
-        Longer description
-
-        :param word: an input argument word is received when Agent object gets bumped into by another Agent object
-        :type word: string
+        Parameters:
+            word (str): an input argument word is received when Agent object
+                gets bumped into by another Agent object
         """
 
         for char in word:
@@ -74,12 +69,12 @@ class Agent:
         """Sets Agent object's self.dictionary (vocabulary) from Agent's
         population's language.
 
-        Longer description
-
-        :param dictionary: an input argument dictionary is the Agent's population's language
-        :type dictionary: list
-        :param size: default=0.7 (min=0.0, max=1.0); denotes random portion of the Agent's population's language the Agent object gets
-        :type size: float
+        Parameters:
+            dictionary (list): an input argument dictionary is the Agent's
+                population's language
+            size (float): default=0.7 (min=0.0, max=1.0); denotes random
+                portion of the Agent's population's language the Agent object
+                gets
         """
         individual_dictionary = []
         dictionary_size = int(size * len(dictionary))
@@ -99,9 +94,8 @@ class Agent:
         """Adds a new, unfamiliar consonant into Agent object's dictionary of
         consonants.
 
-        :param char: an input argument char is the consonant to be added
-        :param type: string
-
+        Parameters:
+            char (string): an input argument char is the consonant to be added
         """
         self.used_consonants.append(char)
 
@@ -133,8 +127,9 @@ class Agent:
     def set_position(self, new_pos):
         """Sets Agent object to its new position (touple).
 
-        :param new_pos: an input argument new_pos is the new Agent object's position on the map
-        :type new_pos: touple
+        Parameters:
+            new_pos (touple): an input argument new_pos is the new Agent
+                object's position on the map
         """
         self.pos = new_pos
 
@@ -142,10 +137,9 @@ class Agent:
         """Returns a random word from the dictionary of the Agent object bumps
         into another Agent object.
 
-        Longer description
-
-        :param other_agent: an input argument other_agent represents some other Agent object that is being bumped
-        :type other_agent: string
+        Parameters:
+            other_agent (string): an input argument other_agent represents some
+                other Agent object that is being bumped
 
         """
         word = random.choice(self.dictionary)
@@ -156,12 +150,12 @@ class Agent:
         receives from another Agent object that bumped into it. It is added to
         the Agent object's vocabulary.
 
-        Longer description
+        Parameters:
 
-        :param other_agent: an input argument other_agent represents some other Agent object that is bumping into object Agent
-        :type other_agent: string
-        :param word: an input argument word is a random word from the other Agent object's dictionary
-        :type word: string
+            other_agent (Agent): an input argument other_agent represents some
+                other Agent object that is bumping into object Agent
+            word (string): an input argument word is a random word from the
+                other Agent object's dictionary
 
         """
         # Do something with word
@@ -185,9 +179,9 @@ class Agent:
         assures possibility that new, unfamiliar consonants can become a part
         of words. The final word is added into Agent object's vocabulary.
 
-        :param word: an input argument word is a random word from bumping Agent object's vocabulary that undergoes possible mutation
-        :type word: string
-
+        Parameters:
+            word (string): an input argument word is a random word from bumping
+                Agent object's vocabulary that undergoes possible mutation
         """
         # Mutating one of the vowels
         if random.random() < vowel_mut:

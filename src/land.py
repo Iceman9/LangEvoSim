@@ -5,12 +5,8 @@ class Realm:
 
     """Class Realm initializes an object that represents a population's living
     ground.
-
-    Longer description
-
-    __init__ variables:
-    :var self.map: holds a matrix (lists) of the realm's map
-
+    Attributes:
+        map (list): A matrix of the realms map.
     """
 
     def __init__(self):
@@ -31,11 +27,9 @@ class Realm:
         Constructs a map of the entire world for populations to populate.
         Alternatively, constructs a map for one population.
 
-        Longer description
-
-        :param size_in_x:
-            default=20; an input argument size_in_x represents the Realm's length on x axis
-        :type size_in_x: int
+        Parameters:
+            size_in_x (int): default=20; an input argument size_in_x represents
+                the Realm's length on x axis.
         """
         temp_map = [None for i in range(11, size_in_x * size_in_y + 11)]
         self.map = []
@@ -49,11 +43,12 @@ class Realm:
         return self.map
 
     def check_if_pos_is_taken(self, pos):
-        """Returns the name of Agent object on position or None. If position is
-        out of map's bounds, returns True.
+        """Returns the name of **Agent** object on ``position`` or ``None``. If
+        position is out of map's bounds, returns True.
 
-        :param pos: an input argument pos is a position to check if taken
-        :type pos: touple
+        Parameters:
+            pos (touple): an input argument pos is a position to check if
+                taken.
         """
         x = pos[0]
         y = pos[1]
@@ -63,12 +58,14 @@ class Realm:
             return True
 
     def move_agent_to_pos(self, agent, new_pos):
-        """Moves Agent object from current position to new position.
+        """Moves **Agent** object from ``current position`` to
+        ``new position``.
 
-        :param agent: an input argument agent denotes the Agent object to move
-        :type agent: string
-        :param new_pos: an input argument new_pos denotes new position to which Agent object moves
-        :type new_pos: touple
+        Parameters:
+            agent (Agent): an input argument agent denotes the Agent object to
+                move
+            new_pos (touple): an input argument new_pos denotes new position to
+                which Agent object moves
         """
         map = self.get_map()
         new_x, new_y = new_pos
@@ -76,6 +73,11 @@ class Realm:
         agent.set_position(new_pos)
 
     def plant_agent(self, agent):
+        """Plants an **Agent** on the map.
+
+        Parameters:
+            agent (Agent): Agent object to be put on map.
+        """
         map = self.get_map()
         # Draw random  indexes
         while 1:
@@ -91,10 +93,11 @@ class Realm:
                 break
 
     def get_possible_moves(self, pos):
-        """ This function gives us the possible moves from the position pos.
+        """ This function gives us the ``possible moves`` from the position
+        **pos** in the current **land**.
 
-        :param pos: position (x, y)
-        :type pos: touple
+        Parameters:
+            pos (touple): Position (x,y).
         """
 
         x, y = pos
