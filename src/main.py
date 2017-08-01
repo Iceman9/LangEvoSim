@@ -25,7 +25,7 @@ class Main:
         self.populations.append(pop)
         return pop
 
-    def create_x_populations(self, N):
+    def create_N_populations(self, N):
         for i in range(N):
             self.create_population()
         return
@@ -59,7 +59,6 @@ class Main:
             agents = population.get_agents()
             for agent in agents:
                 land.plant_agent(agent)
-
 
     def get_world(self):
         return self.world
@@ -115,7 +114,7 @@ if __name__ == '__main__':
     special_agent = special_pop.create_agent()
 
     sim.set_default_settings()
-    sim.create_x_populations(2)
+    sim.create_N_populations(2)
 
     print('Special population:', special_pop)
     print('All populations:', sim.get_populations())
@@ -133,4 +132,4 @@ if __name__ == '__main__':
 
     # SIM TIMEEEEE
 
-    sim.start()
+    sim.start(frame=500)

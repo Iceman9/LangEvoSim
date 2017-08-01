@@ -19,11 +19,9 @@ class LanguageGenerator:
             consonants (list): a list of consonants to be used to construct a
                 language
         """
-        self.vowels = vow
-        self.consonants = cons
         self.properties = {}
-        self.properties['vowels'] = self.vowels
-        self.properties['consonants'] = self.consonants
+        self.properties['vowels'] = vow
+        self.properties['consonants'] = cons
 
     def generate_word(self, min=5, max=8, mutation=0.1):
         """Returns a new randomly generated word with a possible mutation.
@@ -44,20 +42,20 @@ class LanguageGenerator:
         last_draw = random.randint(0, 1)
 
         if last_draw:
-            current_draw = random.choice(self.consonants)
+            current_draw = random.choice(self.properties['consonants'])
         else:
-            current_draw = random.choice(self.vowels)
+            current_draw = random.choice(self.properties['vowels'])
         word = current_draw
         i = 1
         while i < word_length:
             if last_draw:
-                current_draw = random.choice(self.vowels)
+                current_draw = random.choice(self.properties['vowels'])
                 last_draw = 0
             else:
                 if i < word_length - 1 and mutation > random.random():
-                    word += random.choice(self.consonants)
+                    word += random.choice(self.properties['consonants'])
                     i = i + 1
-                current_draw = random.choice(self.consonants)
+                current_draw = random.choice(self.properties['consonants'])
                 last_draw = 1
             i += 1
             word += current_draw
